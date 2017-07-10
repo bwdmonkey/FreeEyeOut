@@ -1,10 +1,10 @@
 # FreeEyeOut
 Open Script of Slacknotes/EyeOut For macOS by @leesw98
 
-# Requirement##
+## Requirement
  - Python==2.7.10
 
-# Instruction
+## Instruction
 1. Get to the "FreeEyeOut" directory on Terminal. Not FreeEyeOut-master
 '''
 cd <path-to-directory>
