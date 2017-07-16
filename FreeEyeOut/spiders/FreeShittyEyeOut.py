@@ -2,29 +2,22 @@
 import scrapy
 import re
 import os
+import csv
 
+# while true; clear && printf '\e[3J'; date; do scrapy runspider FreeShittyEyeOut.py; sleep 30; done
 
 class FreeshittyeyeoutSpider(scrapy.Spider):
     name = 'FreeShittyEyeOut'
     allowed_domains = ['courses.students.ubc.ca']
-    start_urls = [
-    # EDIT HERE USE THE SIMILAR FORMAT
-        'https://courses.students.ubc.ca/cs/main?pname=subjarea&tname=subjareas&req=5&dept=CPSC&course=110&section=101',
-        'https://courses.students.ubc.ca/cs/main?pname=subjarea&tname=subjareas&req=5&dept=CPSC&course=110&section=103',
-        'https://courses.students.ubc.ca/cs/main?pname=subjarea&tname=subjareas&req=5&dept=CPSC&course=110&section=104',
-        'https://courses.students.ubc.ca/cs/main?pname=subjarea&tname=subjareas&req=5&dept=CPSC&course=121&section=201',
-        'https://courses.students.ubc.ca/cs/main?pname=subjarea&tname=subjareas&req=5&dept=CPSC&course=121&section=202',
-        'https://courses.students.ubc.ca/cs/main?pname=subjarea&tname=subjareas&req=5&dept=CPSC&course=121&section=203',
-        'https://courses.students.ubc.ca/cs/main?pname=subjarea&tname=subjareas&req=5&dept=CPSC&course=210&section=201',
-        'https://courses.students.ubc.ca/cs/main?pname=subjarea&tname=subjareas&req=5&dept=CPSC&course=210&section=202',
-        'https://courses.students.ubc.ca/cs/main?pname=subjarea&tname=subjareas&req=5&dept=CPSC&course=210&section=203',
-        'https://courses.students.ubc.ca/cs/main?pname=subjarea&tname=subjareas&req=5&dept=CHEM&course=121&section=102',
-        'https://courses.students.ubc.ca/cs/main?pname=subjarea&tname=subjareas&req=5&dept=CHEM&course=121&section=110',
-        'https://courses.students.ubc.ca/cs/main?pname=subjarea&tname=subjareas&req=5&dept=CHEM&course=121&section=111',
-        'https://courses.students.ubc.ca/cs/main?pname=subjarea&tname=subjareas&req=5&dept=CHEM&course=121&section=122',
-        'https://courses.students.ubc.ca/cs/main?pname=subjarea&tname=subjareas&req=5&dept=CHEM&course=121&section=133',
-        'https://courses.students.ubc.ca/cs/main?pname=subjarea&tname=subjareas&req=5&dept=CHEM&course=121&section=188',
-    ]
+
+    with open('watchlist.csv', 'rb') as f:
+        reader = csv.reader(f)
+        array_list = list(reader)
+
+    start_urls = []
+    for value in array_list:
+        start_urls.append(value[0])
+
     def parse(self, response):
         title = response.css("h4::text").extract_first()
         seats = response.css('table.\\27table').extract_first()
