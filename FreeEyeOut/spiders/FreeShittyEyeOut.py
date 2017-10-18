@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
-import scrapy
-import re
-import os
-import csv
+import scrapy, re, os, csv, smtplib, socket, sys, getpass
+from email.mime.text import MIMEText
 
 # while true; clear && printf '\e[3J'; date; do scrapy runspider FreeShittyEyeOut.py; sleep 30; done
 
@@ -36,7 +34,48 @@ class FreeshittyeyeoutSpider(scrapy.Spider):
         # Change the seat types accordingly
         open_seats = bool(0 < int(general_seats))
         if open_seats:
-            while open_seats:
-                command = 'say "%s has free seats!"'%title
-                os.system(command)
-                print('%s has free seats!')%title
+            try:
+                sendemail(title, response.url)
+            except e:
+                print e
+def sendemail(course, url):
+    receiver = "win981026@gmail.com"
+    try:
+        smtpserver = smtplib.SMTP("smtp.gmail.com", 587)
+        smtpserver.ehlo()
+        smtpserver.starttls()
+        smtpserver.ehlo()
+        print "Connection to Gmail Successfully"
+        print "Connected to Gmail"
+        try:
+            # Sender
+            gmail_user = "freeeyeout@gmail.com"
+            gmail_pwd = "freeeyeout1"
+            smtpserver.login(gmail_user, gmail_pwd)
+            print "Login successful!"
+        except smtplib.SMTPException:
+            print "Authentication failed"
+            smtpserver.close()
+            getpass.getpass("Press ENTER to continue")
+            sys.exit(1)
+    except (socket.gaierror, socket.error, socket.herror, smtplib.SMTPException), e:
+        print "Connection to Gmail failed"
+        print e
+        getpass.getpass("Press ENTER to continue")
+        sys.exit(1)
+    print "Composing email."
+    sub = course +" has free seats!"
+    bodymsg = course + " has free seats! Go register in the section before some other bastards takes it.\n"+url
+    header = "To: "+receiver+"\n" + "From: "+gmail_user+"\n" + "Subject: " + sub + "\n"
+    msg = header + "\n" + bodymsg + "\n\n"
+    print "Email composed."
+    try:
+        print "Trying to send email."
+        smtpserver.sendmail(gmail_user,receiver,msg)
+        smtpserver.close()
+        print "Email sent successfully!"
+    except smtplib.SMTPException:
+        print "Email could not be sent"
+        smtpserver.close()
+        getpass.getpass("Press ENTER to continue")
+        sys.exit(1)
