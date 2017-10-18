@@ -13,4 +13,4 @@ script:
   - scrapy runspider FreeShittyEyeOut.py
 
 after_script:
-  - coverall
+  - coveralls

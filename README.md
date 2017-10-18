@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/leesw98/FreeEyeOut.svg?branch=master)](https://travis-ci.org/leesw98/FreeEyeOut)
 # FreeEyeOut
 Open Script of Slacknotes/EyeOut by @leesw98
 
