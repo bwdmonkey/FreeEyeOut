@@ -1,2 +1,5 @@
 language: python
 sudo: false
+group: stable
+dist: trusty
+os: osx
