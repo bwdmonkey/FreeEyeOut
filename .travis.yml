@@ -9,7 +9,8 @@ install:
   - pip install -r requirements.txt
 
 script:
-  - scrapy runspider FreeEyeOut/spiders/FreeShittyEyeOut.py
+  - cd FreeEyeOut/spiders
+  - scrapy runspider FreeShittyEyeOut.py
 
 after_script:
   - coverall
