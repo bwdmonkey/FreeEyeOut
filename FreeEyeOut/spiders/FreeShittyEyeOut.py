@@ -8,7 +8,7 @@ class FreeshittyeyeoutSpider(scrapy.Spider):
     name = 'FreeShittyEyeOut'
     allowed_domains = ['courses.students.ubc.ca']
 
-    with open('./watchlist.csv', 'rb') as f:
+    with open('../../watchlist.csv', 'rb') as f:
         reader = csv.reader(f)
         array_list = list(reader)
 
