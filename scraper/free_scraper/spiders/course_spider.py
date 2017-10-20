@@ -12,7 +12,7 @@ class course_spider(scrapy.Spider):
     allowed_domains = ['courses.students.ubc.ca']
 
     # TODO: deprecate in favour of more robust solution
-    with open('watchlist.csv', 'rb') as f:
+    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'watchlist.csv'), 'rb') as f:
         reader = csv.reader(f)
         array_list = list(reader)
 
