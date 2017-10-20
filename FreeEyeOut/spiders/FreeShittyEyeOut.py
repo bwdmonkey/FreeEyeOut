@@ -5,7 +5,7 @@ from FreeEyeOut.items import CourseItem
 
 # while true; clear && printf '\e[3J'; date; do scrapy runspider FreeShittyEyeOut.py; sleep 30; done
 
-class FreeshittyeyeoutSpider(scrapy.Spider):
+class FreeShittyEyeOutSpider(scrapy.Spider):
     name = 'FreeShittyEyeOut'
     allowed_domains = ['courses.students.ubc.ca']
 
