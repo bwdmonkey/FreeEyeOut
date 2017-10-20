@@ -9,15 +9,15 @@
 #     http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
 #     http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = 'FreeEyeOut'
+BOT_NAME = 'free_scraper'
 
-SPIDER_MODULES = ['FreeEyeOut.spiders']
-NEWSPIDER_MODULE = 'FreeEyeOut.spiders'
+SPIDER_MODULES = ['free_scraper.spiders']
+NEWSPIDER_MODULE = 'free_scraper.spiders'
 
 LOG_ENABLED = False
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-USER_AGENT = 'FreeEyeOut'
+USER_AGENT = 'free_scraper'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
@@ -70,8 +70,8 @@ TELNETCONSOLE_ENABLED = False
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    'FreeEyeOut.pipelines.EmailAlertPipeline': 300,
-    #'FreeEyeOut.pieplines.ConsoleLogPipeline': 900,
+    'free_scraper.pipelines.EmailAlertPipeline': 300,
+    'free_scraper.pipelines.ConsoleLogPipeline': 900,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
