@@ -12,6 +12,7 @@ install:
 script:
   - python --version
   - pip --version
+  - pip install -r requirements.txt
   - pip list
   - bash scripts/live_tests.sh
 
