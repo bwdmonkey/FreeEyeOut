@@ -14,14 +14,13 @@ class EmailAlertPipeline(object):
     Send relevant data to Email address
     """
     RECEIVER = "win981026@gmail.com"
-    SMTPSERVER = None
+    SMTPSERVER = smtplib.SMTP("smtp.gmail.com", 587)
 
-    def open_spider(self, spider, server=SMTPSERVER):
+    def __init__(self, server=SMTPSERVER):
         """
         Setup connection to Gmail when server opens
         """
         try:
-            server = smtplib.SMTP("smtp.gmail.com", 587)
             server.ehlo()
             server.starttls()
             server.ehlo()
@@ -29,7 +28,7 @@ class EmailAlertPipeline(object):
             print "Connected to Gmail"
             server.login(SENDER_GMAIL, SENDER_PWD)
             print "Login successful!"
-        except (socket.gaierror, socket.error, socket.herror, smtplib.SMTPException), e:
+        except Exception as e:
             print "Connection to Gmail failed"
             print e
             getpass.getpass("Press ENTER to continue")
@@ -39,8 +38,9 @@ class EmailAlertPipeline(object):
         """
         Close connection when spider closes
         """
+        print "Closing spider and connection."
         if server:
-            server.close() 
+            server.close()
 
     def process_item(self, item, spider):
         """
@@ -48,10 +48,10 @@ class EmailAlertPipeline(object):
         """
         # Change the seat types accordingly
         if isinstance(item, CourseItem):
-            open_seats = bool(0 < int(item.general_seats))
+            open_seats = bool(0 < int(item['general_seats']))
             if open_seats:
                 try:
-                    self.__send_email(item.title, item.url)
+                    self.__send_email(item['title'], item['url'])
                 except Exception as e:
                     print e
 
@@ -70,13 +70,9 @@ class EmailAlertPipeline(object):
         try:
             print "Trying to send email."
             server.sendmail(SENDER_GMAIL,self.RECEIVER,msg)
-            server.close()
             print "Email sent successfully!"
         except smtplib.SMTPException:
             print "Email could not be sent"
-            server.close()
-            getpass.getpass("Press ENTER to continue")
-            sys.exit(1)
 
 class ConsoleLogPipeline(object):
     """
@@ -85,9 +81,9 @@ class ConsoleLogPipeline(object):
     def process_item(self, item, spider):
         if isinstance(item, CourseItem):
             print "----------------FreeShittyEyeOut by /u/leesw----------------"
-            print "Course: ", item.title
-            print "Total Seats Remaining: ", item.total_seats
-            print "Currently Registered: ", item.registered_seats
-            print "General Seats Remaining: ", item.general_seats
-            print "Restricted Seats Remaining: ", item.restricted_seats
+            print "Course: ", item['title']
+            print "Total Seats Remaining: ", item['total_seats']
+            print "Currently Registered: ", item['registered_seats']
+            print "General Seats Remaining: ", item['general_seats']
+            print "Restricted Seats Remaining: ", item['restricted_seats']
         return item

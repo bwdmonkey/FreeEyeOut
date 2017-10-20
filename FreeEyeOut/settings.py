@@ -71,7 +71,7 @@ TELNETCONSOLE_ENABLED = False
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
     'FreeEyeOut.pipelines.EmailAlertPipeline': 300,
-    'FreeEyeOut.pieplines.ConsoleLogPipeline': 900,
+    #'FreeEyeOut.pieplines.ConsoleLogPipeline': 900,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
