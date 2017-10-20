@@ -10,10 +10,16 @@ from FreeEyeOut.items import CourseItem
 from settings import SENDER_GMAIL, SENDER_PWD
 
 class EmailAlertPipeline(object):
+    """
+    Send relevant data to Email address
+    """
     RECEIVER = "win981026@gmail.com"
     SMTPSERVER = None
 
     def open_spider(self, spider, server=SMTPSERVER):
+        """
+        Setup connection to Gmail when server opens
+        """
         try:
             server = smtplib.SMTP("smtp.gmail.com", 587)
             server.ehlo()
@@ -28,17 +34,18 @@ class EmailAlertPipeline(object):
             print e
             getpass.getpass("Press ENTER to continue")
             sys.exit(1)
-        except smtplib.SMTPException:
-            print "Authentication failed"
-            server.close()
-            getpass.getpass("Press ENTER to continue")
-            sys.exit(1)
 
     def close_spider(self, spider, server=SMTPSERVER):
+        """
+        Close connection when spider closes
+        """
         if server:
             server.close() 
 
     def process_item(self, item, spider):
+        """
+        Process incoming items
+        """
         # Change the seat types accordingly
         if isinstance(item, CourseItem):
             open_seats = bool(0 < int(item.general_seats))
@@ -51,6 +58,9 @@ class EmailAlertPipeline(object):
         return item
 
     def __send_email(self, course, url, server=SMTPSERVER):
+        """
+        Format and send email
+        """
         print "Composing email."
         sub = course +" has free seats!"
         bodymsg = course + " has free seats! Go register in the section before some other bastards takes it.\n"+url
@@ -70,7 +80,7 @@ class EmailAlertPipeline(object):
 
 class ConsoleLogPipeline(object):
     """
-    Outputs CourseItem data to 
+    Outputs CourseItem data to console
     """
     def process_item(self, item, spider):
         if isinstance(item, CourseItem):

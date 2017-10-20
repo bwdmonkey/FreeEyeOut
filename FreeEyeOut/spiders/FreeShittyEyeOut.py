@@ -6,6 +6,9 @@ from FreeEyeOut.items import CourseItem
 # while true; clear && printf '\e[3J'; date; do scrapy runspider FreeShittyEyeOut.py; sleep 30; done
 
 class FreeShittyEyeOutSpider(scrapy.Spider):
+    """
+    Scrape for defined list of courses and gets their seat status
+    """
     name = 'FreeShittyEyeOut'
     allowed_domains = ['courses.students.ubc.ca']
 
