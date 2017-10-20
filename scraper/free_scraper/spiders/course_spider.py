@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import scrapy, re, os, csv, smtplib, socket, sys, getpass
-import os
 from email.mime.text import MIMEText
 from free_scraper.items import CourseItem
 
