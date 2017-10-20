@@ -5,7 +5,79 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
 
+import smtplib, getpass, sys, socket
+from FreeEyeOut.items import CourseItem
+from settings import SENDER_GMAIL, SENDER_PWD
 
-class FreeeyeoutPipeline(object):
+class EmailAlertPipeline(object):
+    RECEIVER = "win981026@gmail.com"
+    SMTPSERVER = None
+
+    def open_spider(self, spider, server=SMTPSERVER):
+        try:
+            server = smtplib.SMTP("smtp.gmail.com", 587)
+            server.ehlo()
+            server.starttls()
+            server.ehlo()
+            print "Connection to Gmail Successfully"
+            print "Connected to Gmail"
+            server.login(SENDER_GMAIL, SENDER_PWD)
+            print "Login successful!"
+        except (socket.gaierror, socket.error, socket.herror, smtplib.SMTPException), e:
+            print "Connection to Gmail failed"
+            print e
+            getpass.getpass("Press ENTER to continue")
+            sys.exit(1)
+        except smtplib.SMTPException:
+            print "Authentication failed"
+            server.close()
+            getpass.getpass("Press ENTER to continue")
+            sys.exit(1)
+
+    def close_spider(self, spider, server=SMTPSERVER):
+        if server:
+            server.close() 
+
     def process_item(self, item, spider):
+        # Change the seat types accordingly
+        if isinstance(item, CourseItem):
+            open_seats = bool(0 < int(item.general_seats))
+            if open_seats:
+                try:
+                    self.__send_email(item.title, item.url)
+                except Exception as e:
+                    print e
+
+        return item
+
+    def __send_email(self, course, url, server=SMTPSERVER):
+        print "Composing email."
+        sub = course +" has free seats!"
+        bodymsg = course + " has free seats! Go register in the section before some other bastards takes it.\n"+url
+        header = "To: "+self.RECEIVER+"\n" + "From: "+SENDER_GMAIL+"\n" + "Subject: " + sub + "\n"
+        msg = header + "\n" + bodymsg + "\n\n"
+        print "Email composed."
+        try:
+            print "Trying to send email."
+            server.sendmail(SENDER_GMAIL,self.RECEIVER,msg)
+            server.close()
+            print "Email sent successfully!"
+        except smtplib.SMTPException:
+            print "Email could not be sent"
+            server.close()
+            getpass.getpass("Press ENTER to continue")
+            sys.exit(1)
+
+class ConsoleLogPipeline(object):
+    """
+    Outputs CourseItem data to 
+    """
+    def process_item(self, item, spider):
+        if isinstance(item, CourseItem):
+            print "----------------FreeShittyEyeOut by /u/leesw----------------"
+            print "Course: ", item.title
+            print "Total Seats Remaining: ", item.total_seats
+            print "Currently Registered: ", item.registered_seats
+            print "General Seats Remaining: ", item.general_seats
+            print "Restricted Seats Remaining: ", item.restricted_seats
         return item

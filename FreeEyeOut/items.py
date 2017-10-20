@@ -7,8 +7,9 @@
 
 import scrapy
 
-
-class FreeeyeoutItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+class CourseItem(scrapy.Item):
+    title = scrapy.Field()
+    total_seats = scrapy.Field()
+    registered_seats = scrapy.Field()
+    general_seats = scrapy.Field()
+    restricted_seats = scrapy.Field()

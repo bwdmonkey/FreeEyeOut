@@ -14,13 +14,17 @@ BOT_NAME = 'FreeEyeOut'
 SPIDER_MODULES = ['FreeEyeOut.spiders']
 NEWSPIDER_MODULE = 'FreeEyeOut.spiders'
 
-LOG_ENABLED = False;
+LOG_ENABLED = False
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 USER_AGENT = 'FreeEyeOut'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
+
+# Sender Credentials (freeeyeout account)
+SENDER_GMAIL = "freeeyeout@gmail.com"
+SENDER_PWD = "freeeyeout1"
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 # CONCURRENT_REQUESTS = 32
@@ -65,9 +69,10 @@ TELNETCONSOLE_ENABLED = False
 
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'FreeEyeOut.pipelines.FreeeyeoutPipeline': 300,
-#}
+ITEM_PIPELINES = {
+    'FreeEyeOut.pipelines.EmailAlertPipeline': 300,
+    'FreeEyeOut.pieplines.ConsoleLogPipeline': 900,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html
