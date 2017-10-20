@@ -37,6 +37,6 @@ class FreeShittyEyeOutSpider(scrapy.Spider):
             registered_seats=registered_seats,
             general_seats=general_seats,
             restricted_seats=restricted_seats,
-            url=response.rule
+            url=response.url,
         )
     
