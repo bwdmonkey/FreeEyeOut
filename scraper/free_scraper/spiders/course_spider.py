@@ -1,18 +1,18 @@
 # -*- coding: utf-8 -*-
 import scrapy, re, os, csv, smtplib, socket, sys, getpass
+import os
 from email.mime.text import MIMEText
-from FreeEyeOut.items import CourseItem
+from free_scraper.items import CourseItem
 
-# while true; clear && printf '\e[3J'; date; do scrapy runspider FreeShittyEyeOut.py; sleep 30; done
-
-class FreeShittyEyeOutSpider(scrapy.Spider):
+class course_spider(scrapy.Spider):
     """
     Scrape for defined list of courses and gets their seat status
     """
-    name = 'FreeShittyEyeOut'
+    name = 'course_spider'
     allowed_domains = ['courses.students.ubc.ca']
 
-    with open('../../watchlist.csv', 'rb') as f:
+    # TODO: deprecate in favour of more robust solution
+    with open(os.path.join(os.path.dirname(__file__), 'watchlist.csv'), 'r') as f:
         reader = csv.reader(f)
         array_list = list(reader)
 

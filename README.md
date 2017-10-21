@@ -1,13 +1,11 @@
 [![Build Status](https://travis-ci.org/leesw98/FreeEyeOut.svg?branch=master)](https://travis-ci.org/leesw98/FreeEyeOut)
 # FreeEyeOut
-Open Script of Slacknotes/EyeOut by @leesw98
+Open Script of Slacknotes/EyeOut by @leesw98 and @bobheadxi
 
 Note: Definitely not as good as the original but it works! :)
 
-## Requirement
- - Python==2.7.10
-
 ## Instruction
+**Out of date, changes coming soon**
 1. Get to the "FreeEyeOut" directory on Terminal. Not FreeEyeOut-master
 ```
 cd <path-to-directory>

@@ -6,8 +6,8 @@
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
 
 import smtplib, getpass, sys, socket
-from FreeEyeOut.items import CourseItem
-from settings import SENDER_GMAIL, SENDER_PWD
+from free_scraper.items import CourseItem
+from free_scraper.settings import SENDER_GMAIL, SENDER_PWD
 
 class EmailAlertPipeline(object):
     """

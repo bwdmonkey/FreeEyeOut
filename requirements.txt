@@ -1,2 +1,2 @@
-scrapy==1.4.0
-coveralls==1.2.0
+scrapy
+coveralls
