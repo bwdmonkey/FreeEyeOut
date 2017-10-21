@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import scrapy, re, os, csv, smtplib, socket, sys, getpass
-import os
 from email.mime.text import MIMEText
 from free_scraper.items import CourseItem
 
@@ -12,7 +11,7 @@ class course_spider(scrapy.Spider):
     allowed_domains = ['courses.students.ubc.ca']
 
     # TODO: deprecate in favour of more robust solution
-    with open(os.path.join(os.path.dirname(__file__), 'watchlist.csv'), 'rb') as f:
+    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'watchlist.csv'), 'rb') as f:
         reader = csv.reader(f)
         array_list = list(reader)
 
@@ -39,4 +38,3 @@ class course_spider(scrapy.Spider):
             restricted_seats=restricted_seats,
             url=response.url,
         )
-    

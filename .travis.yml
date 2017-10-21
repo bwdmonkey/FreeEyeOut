@@ -10,7 +10,16 @@ install:
   - pip install -r requirements.txt
 
 script:
+  - python --version
+  - pip --version
+  - pip install -r requirements.txt
+  - pip list
   - bash scripts/live_tests.sh
 
 after_script:
   - coveralls
+
+notifications:
+  email:
+    on_sucess: never
+    on_failure: always
