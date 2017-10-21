@@ -8,7 +8,6 @@ services:
 
 install:
   - pip install -r requirements.txt
-  - docker-compose up -d scraper
 
 script:
   - bash scripts/live_tests.sh
