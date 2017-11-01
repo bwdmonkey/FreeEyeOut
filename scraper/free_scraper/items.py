@@ -17,3 +17,13 @@ class CourseItem(scrapy.Item):
     general_seats = scrapy.Field()
     restricted_seats = scrapy.Field()
     url = scrapy.Field()
+
+class TempCourseItem(scrapy.Item):
+    """
+    Stores data about a course and associated subject
+    SubItems: ScrapySectionItem, ScrapySubjectItem
+    """
+    subject = scrapy.Field()
+    url = scrapy.Field()
+    name = scrapy.Field()
+    description = scrapy.Field()
