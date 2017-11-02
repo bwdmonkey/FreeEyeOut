@@ -7,18 +7,18 @@
 
 import scrapy
 
-class CourseItem(scrapy.Item):
-    """
-    Stores a data for a course including seats, etc
-    """
-    title = scrapy.Field()
-    total_seats = scrapy.Field()
-    registered_seats = scrapy.Field()
-    general_seats = scrapy.Field()
-    restricted_seats = scrapy.Field()
-    url = scrapy.Field()
+# class SectionItem(scrapy.Item):
+#     """
+#     Stores a data for a course including seats, etc
+#     """
+#     title = scrapy.Field()
+#     total_seats = scrapy.Field()
+#     registered_seats = scrapy.Field()
+#     general_seats = scrapy.Field()
+#     restricted_seats = scrapy.Field()
+#     url = scrapy.Field()
 
-class TempCourseItem(scrapy.Item):
+class CourseItem(scrapy.Item):
     """
     Stores data about a course and associated subject
     SubItems: ScrapySectionItem, ScrapySubjectItem
@@ -27,3 +27,13 @@ class TempCourseItem(scrapy.Item):
     url = scrapy.Field()
     name = scrapy.Field()
     description = scrapy.Field()
+    # section = scrapy.SectionItem() How do I link the two?
+
+class SectionItem(scrapy.Item):
+    """
+    Stores a data on course section details
+    """
+    status = scrapy.Field()
+    section = scrapy.Field()
+    url = scrapy.Field()
+    activity = scrapy.Field()

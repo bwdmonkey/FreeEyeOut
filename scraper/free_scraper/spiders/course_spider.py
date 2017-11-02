@@ -12,13 +12,13 @@ class course_spider(scrapy.Spider):
     allowed_domains = ['courses.students.ubc.ca']
 
     # TODO: deprecate in favour of more robust solution
-    with open(os.path.join(os.path.dirname(__file__), 'watchlist.csv'), 'r') as f:
-        reader = csv.reader(f)
-        array_list = list(reader)
-
-    start_urls = []
-    for value in array_list:
-        start_urls.append(value[0])
+    # with open(os.path.join(os.path.dirname(__file__), 'watchlist.csv'), 'r') as f:
+    #     reader = csv.reader(f)
+    #     array_list = list(reader)
+    # 
+    # start_urls = []
+    # for value in array_list:
+    #     start_urls.append(value[0])
 
     def parse(self, response):
         title = response.css("h4::text").extract_first()
@@ -39,4 +39,3 @@ class course_spider(scrapy.Spider):
             restricted_seats=restricted_seats,
             url=response.url,
         )
-    

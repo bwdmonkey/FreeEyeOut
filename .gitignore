@@ -104,3 +104,8 @@ venv.bak/
 .mypy_cache/
 
 .vscode/
+.DS_Store
+FreeEyeOut/.DS_Store
+scraper/.DS_Store
+scraper/free_scraper/.DS_Store
+scraper/free_scraper/spiders/.DS_Store
