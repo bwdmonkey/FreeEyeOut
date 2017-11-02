@@ -79,11 +79,10 @@ class ConsoleLogPipeline(object):
     Outputs CourseItem data to console
     """
     def process_item(self, item, spider):
-        if isinstance(item, CourseItem):
-            print "----------------FreeShittyEyeOut by /u/leesw----------------"
-            print "Course: ", item['title']
-            print "Total Seats Remaining: ", item['total_seats']
-            print "Currently Registered: ", item['registered_seats']
-            print "General Seats Remaining: ", item['general_seats']
-            print "Restricted Seats Remaining: ", item['restricted_seats']
+        print "----------------FreeShittyEyeOut by /u/leesw----------------"
+        print "Course: ", item['course']['name'] + item['section']
+        print "Total Seats Remaining: ", item['seats_data']['total_seats']
+        print "Currently Registered: ", item['seats_data']['registered_seats']
+        print "General Seats Remaining: ", item['seats_data']['general_seats']
+        print "Restricted Seats Remaining: ", item['seats_data']['restricted_seats']
         return item
