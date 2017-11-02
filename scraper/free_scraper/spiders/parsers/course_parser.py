@@ -1,5 +1,5 @@
 import scrapy
-from free_scraper.items import SectionItem, CourseItem
+from free_scraper.items import SectionItem
 
 """
 Sourced from the ubclaunchpad/sleuth project by @bobheadxi
@@ -16,15 +16,15 @@ def parse_subjects(response):
     """
     rows = response.xpath('//tbody/tr')
     for row in rows:
-        next_rel_url = extract_element(row.xpath('./td/a/@href'), 0)
+        next_rel_url = _extract_element(row.xpath('./td/a/@href'), 0)
         if len(next_rel_url) > 1:
             next_url = BASE_URL + next_rel_url
-            title = extract_element(row.xpath('./td[2]/text()'), 0)
-            code = extract_element(row.xpath('./td/a/text()'), 0)
+            title = _extract_element(row.xpath('./td[2]/text()'), 0)
+            code = _extract_element(row.xpath('./td/a/text()'), 0)
             subject = {
                 "url": next_url,
                 "name": code+" "+title.strip(),
-                "faculty": utils.extract_element(row.xpath('./td[3]/text()'),0)
+                "faculty": _extract_element(row.xpath('./td[3]/text()'),0)
             }
 
             yield scrapy.Request(
@@ -41,17 +41,17 @@ def parse_course(response):
     subject = response.meta['data']
     rows = response.xpath('//tbody/tr')
     for row in rows:
-        next_rel_url = extract_element(row.xpath('./td/a/@href'), 0)
-        course_code = extract_element(row.xpath('./td/a/text()'), 0)
-        course_title = extract_element(row.xpath('./td[2]/text()'), 0)
+        next_rel_url = _extract_element(row.xpath('./td/a/@href'), 0)
+        course_code = _extract_element(row.xpath('./td/a/text()'), 0)
+        course_title = _extract_element(row.xpath('./td[2]/text()'), 0)
         course_name = course_code+" "+course_title
         if len(next_rel_url) > 1:
             next_url = BASE_URL + next_rel_url
-            course = CourseItem(
-                subject=subject,
-                url=next_url,
-                name=course_name,
-            )
+            course = {
+                "url": next_url,
+                "name": course_name,
+                "subject": subject
+            }
             yield scrapy.Request(
                 next_url,
                 callback=parse_course_details,
@@ -63,25 +63,25 @@ def parse_course_details(response):
     Parse course details page.
     """
     course = response.meta['data']
-    course['description'] = utils.extract_element(response.xpath('//p/text()'), 0).strip()
-    # TODO: List of sections into course[sections], maybe parse as well
+    course['description'] = _extract_element(response.xpath('//p/text()'), 0).strip()
     rows = response.xpath("//table")[1].xpath("//tr") # Includes the header as well
-    rows.pop(0); # Get rid of the headers
+    rows.pop(0) # Get rid of the headers
     for row in rows:
-        course_status = extract_element(row.xpath("./td/text()"), 0)
-        course_section = extract_element(row.xpath("./td/a/text()"),0)
-        course_section_url = extract_element(row.xpath("./td/a/@href"), 0)
-        activity_type = extract_element(row.xpath("./td/text()"), 3)
+        course_status = _extract_element(row.xpath("./td/text()"), 0)
+        course_section = _extract_element(row.xpath("./td/a/text()"), 0)
+        course_section_url = _extract_element(row.xpath("./td/a/@href"), 0)
+        activity_type = _extract_element(row.xpath("./td/text()"), 3)
         if len(course_section_url) > 1:
             next_url = BASE_URL + course_section_url
             section = SectionItem(
-                status = course_status
-                section = scrapy.Field()
-                url = course_section_url
-                activity = activity_type
+                course=course,
+                section=course_section,
+                status=course_status,
+                activity=activity_type,
+                url=next_url
             )
             yield scrapy.Request(
-                course_section_url,
+                next_url,
                 callback=parse_section_details,
                 meta={'data': section}
             )
@@ -90,19 +90,23 @@ def parse_course_details(response):
 
 def parse_section_details(response):
     """
-    Parse course details page.
+    Parse section details page.
     """
     section = response.meta['data']
-    section['description'] = utils.extract_element(response.xpath('//p/text()'), 0).strip()
-    # TODO: List of sections into course[sections], maybe parse as well
     tbl = response.xpath("//table")[3].xpath("tr")[0] # Includes the header as well
-    total_remaining = extract_element(tbl.xpath("//td//strong/text()"), 0)
-    currently_registered = extract_element(tbl.xpath("//td//strong/text()"), 1)
-    general_remaining = extract_element(tbl.xpath("//td//strong/text()"), 2)
-    restricted_remaining = extract_element(tbl.xpath("//td//strong/text()"), 3)
+    total_remaining = _extract_element(tbl.xpath("//td//strong/text()"), 0)
+    currently_registered = _extract_element(tbl.xpath("//td//strong/text()"), 1)
+    general_remaining = _extract_element(tbl.xpath("//td//strong/text()"), 2)
+    restricted_remaining = _extract_element(tbl.xpath("//td//strong/text()"), 3)
 
-    # what do i do now? lol
-    # return course
+    seats_data = {
+        "total_remaining":total_remaining,
+        "currently_registered":currently_registered,
+        "general_remaining":general_remaining,
+        "restricted_remaining":restricted_remaining
+    }
+    section['seats_data'] = seats_data
+    return section
 
 
 # Separate Method for extraction

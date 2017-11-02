@@ -6,7 +6,7 @@
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
 
 import smtplib, getpass, sys, socket
-from free_scraper.items import CourseItem
+from free_scraper.items import SectionItem
 from free_scraper.settings import SENDER_GMAIL, SENDER_PWD
 
 class EmailAlertPipeline(object):
@@ -47,13 +47,13 @@ class EmailAlertPipeline(object):
         Process incoming items
         """
         # Change the seat types accordingly
-        if isinstance(item, CourseItem):
-            open_seats = bool(0 < int(item['general_seats']))
-            if open_seats:
-                try:
-                    self.__send_email(item['title'], item['url'])
-                except Exception as e:
-                    print e
+        open_seats = bool(0 < int(item['seats_data']['general_seats']))
+        if open_seats:
+            try:
+                title = item['course']['name'] + item['section']
+                self.__send_email(title, item['url'])
+            except Exception as e:
+                print e
 
         return item
 

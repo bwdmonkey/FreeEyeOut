@@ -18,22 +18,28 @@ import scrapy
 #     restricted_seats = scrapy.Field()
 #     url = scrapy.Field()
 
-class CourseItem(scrapy.Item):
-    """
-    Stores data about a course and associated subject
-    SubItems: ScrapySectionItem, ScrapySubjectItem
-    """
-    subject = scrapy.Field()
-    url = scrapy.Field()
-    name = scrapy.Field()
-    description = scrapy.Field()
-    # section = scrapy.SectionItem() How do I link the two?
-
 class SectionItem(scrapy.Item):
     """
     Stores a data on course section details
+    course = {
+        "url": *,
+        "name": *,
+        "subject": {
+            "url": *,
+            "name": *,
+            "faculty": *,
+        }
+    }
+    seats_data = {
+        "total_remaining": *,
+        "currently_registered": *,
+        "general_remaining": *,
+        "restricted_remaining": +
+    }
     """
-    status = scrapy.Field()
+    course = scrapy.Field()
     section = scrapy.Field()
-    url = scrapy.Field()
+    status = scrapy.Field()
     activity = scrapy.Field()
+    url = scrapy.Field()
+    seats_data = scrapy.Field()
