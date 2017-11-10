@@ -34,7 +34,7 @@ class SectionItem(scrapy.Item):
         "total_remaining": *,
         "currently_registered": *,
         "general_remaining": *,
-        "restricted_remaining": +
+        "restricted_remaining": *,
     }
     """
     course = scrapy.Field()

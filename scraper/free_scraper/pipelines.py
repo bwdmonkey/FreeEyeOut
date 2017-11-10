@@ -46,6 +46,9 @@ class EmailAlertPipeline(object):
         """
         Process incoming items
         """
+        print "New Email Item: "
+        print item
+        print type(item)
         # Change the seat types accordingly
         open_seats = bool(0 < int(item['seats_data']['general_seats']))
         if open_seats:

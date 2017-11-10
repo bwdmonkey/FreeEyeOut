@@ -85,13 +85,12 @@ def parse_course_details(response):
                 callback=parse_section_details,
                 meta={'data': section}
             )
-            
-    return course
 
 def parse_section_details(response):
     """
     Parse section details page.
     """
+    # print response.extract()
     section = response.meta['data']
     tbl = response.xpath("//table")[3].xpath("tr")[0] # Includes the header as well
     total_remaining = _extract_element(tbl.xpath("//td//strong/text()"), 0)
@@ -107,7 +106,6 @@ def parse_section_details(response):
     }
     section['seats_data'] = seats_data
     return section
-
 
 # Separate Method for extraction
 def _extract_element(item_list, index):
