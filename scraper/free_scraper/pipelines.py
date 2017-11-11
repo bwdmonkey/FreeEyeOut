@@ -49,11 +49,7 @@ class EmailAlertPipeline(object):
         print "New Email Item: "
         print item
         print type(item)
-<<<<<<< HEAD
         print item.get("seats_data").get("general_remaining")
-=======
-        print item.get("seats_data").keys()
->>>>>>> 28b5fa6... Fixed pipeline and data retrive
         general_seats = item.get("seats_data").get("general_remaining")
         # print "Num of seats: " + item["seats_data"].get("general_remaining", None)
 
