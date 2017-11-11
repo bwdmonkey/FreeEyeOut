@@ -49,12 +49,20 @@ class EmailAlertPipeline(object):
         print "New Email Item: "
         print item
         print type(item)
+<<<<<<< HEAD
+        print item.get("seats_data").get("general_remaining")
+=======
+        print item.get("seats_data").keys()
+>>>>>>> 28b5fa6... Fixed pipeline and data retrive
+        general_seats = item.get("seats_data").get("general_remaining")
+        # print "Num of seats: " + item["seats_data"].get("general_remaining", None)
+
         # Change the seat types accordingly
-        open_seats = bool(0 < int(item['seats_data']['general_seats']))
+        open_seats = bool(0 < general_seats)
         if open_seats:
             try:
-                title = item['course']['name'] + item['section']
-                self.__send_email(title, item['url'])
+                title = item.get("course").get("name") + item.get("section")
+                self.__send_email(title, item.get("url"))
             except Exception as e:
                 print e
 
@@ -83,7 +91,7 @@ class ConsoleLogPipeline(object):
     """
     def process_item(self, item, spider):
         print "----------------FreeShittyEyeOut by /u/leesw----------------"
-        print "Course: ", item['course']['name'] + item['section']
+        print "Course: ", item.get("course").get("name") + item.get("section")
         print "Total Seats Remaining: ", item['seats_data']['total_seats']
         print "Currently Registered: ", item['seats_data']['registered_seats']
         print "General Seats Remaining: ", item['seats_data']['general_seats']

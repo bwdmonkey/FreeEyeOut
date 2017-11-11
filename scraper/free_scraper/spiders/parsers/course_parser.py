@@ -105,6 +105,7 @@ def parse_section_details(response):
         "restricted_remaining":restricted_remaining
     }
     section['seats_data'] = seats_data
+    # print section
     return section
 
 # Separate Method for extraction
