@@ -24,7 +24,6 @@ class EmailAlertPipeline(object):
             server.ehlo()
             server.starttls()
             server.ehlo()
-            print "Connection to Gmail Successfully"
             print "Connected to Gmail"
             server.login(SENDER_GMAIL, SENDER_PWD)
             print "Login successful!"
@@ -46,15 +45,12 @@ class EmailAlertPipeline(object):
         """
         Process incoming items
         """
-        print "New Email Item: "
-        print item
-        print type(item)
-        print item.get("seats_data").get("general_remaining")
-        general_seats = item.get("seats_data").get("general_remaining")
-        # print "Num of seats: " + item["seats_data"].get("general_remaining", None)
+
+        general_seats = int(item.get("seats_data").get("general_remaining"))
+        restricted_seats = int(item.get("seats_data").get("restricted_remaining"))
 
         # Change the seat types accordingly
-        open_seats = bool(0 < general_seats)
+        open_seats = bool(0 < general_seats or 0 < restricted_seats)
         if open_seats:
             try:
                 title = item.get("course").get("name") + item.get("section")
@@ -86,10 +82,11 @@ class ConsoleLogPipeline(object):
     Outputs CourseItem data to console
     """
     def process_item(self, item, spider):
+        seat_data = item.get("seats_data")
         print "----------------FreeShittyEyeOut by /u/leesw----------------"
         print "Course: ", item.get("course").get("name") + item.get("section")
-        print "Total Seats Remaining: ", item['seats_data']['total_seats']
-        print "Currently Registered: ", item['seats_data']['registered_seats']
-        print "General Seats Remaining: ", item['seats_data']['general_seats']
-        print "Restricted Seats Remaining: ", item['seats_data']['restricted_seats']
+        print "Total Seats Remaining: ", seat_data.get("total_remaining")
+        print "Currently Registered: ", seat_data.get("currently_registered")
+        print "General Seats Remaining: ", seat_data.get("general_remaining")
+        print "Restricted Seats Remaining: ", seat_data.get("restricted_remaining")
         return item

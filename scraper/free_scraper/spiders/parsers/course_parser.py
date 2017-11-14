@@ -92,7 +92,7 @@ def parse_section_details(response):
     """
     # print response.extract()
     section = response.meta['data']
-    tbl = response.xpath("//table")[3].xpath("tr")[0] # Includes the header as well
+    tbl = response.xpath("//table")[3].xpath("tr")[0]
     total_remaining = _extract_element(tbl.xpath("//td//strong/text()"), 0)
     currently_registered = _extract_element(tbl.xpath("//td//strong/text()"), 1)
     general_remaining = _extract_element(tbl.xpath("//td//strong/text()"), 2)
@@ -105,7 +105,6 @@ def parse_section_details(response):
         "restricted_remaining":restricted_remaining
     }
     section['seats_data'] = seats_data
-    # print section
     return section
 
 # Separate Method for extraction

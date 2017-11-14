@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
-import scrapy, re, os, csv, smtplib, socket, sys, getpass
-import os
-from email.mime.text import MIMEText
+import scrapy, os, socket, sys, getpass
 from free_scraper.spiders.parsers.course_parser import parse_subjects
 
 class course_spider(scrapy.Spider):

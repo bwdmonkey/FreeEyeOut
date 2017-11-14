@@ -7,17 +7,6 @@
 
 import scrapy
 
-# class SectionItem(scrapy.Item):
-#     """
-#     Stores a data for a course including seats, etc
-#     """
-#     title = scrapy.Field()
-#     total_seats = scrapy.Field()
-#     registered_seats = scrapy.Field()
-#     general_seats = scrapy.Field()
-#     restricted_seats = scrapy.Field()
-#     url = scrapy.Field()
-
 class SectionItem(scrapy.Item):
     """
     Stores a data on course section details
