@@ -72,7 +72,7 @@ class EmailAlertPipeline(object):
         print "Email composed."
         try:
             print "Trying to send email."
-            server.sendmail(SENDER_GMAIL,self.RECEIVER,msg)
+            # server.sendmail(SENDER_GMAIL,self.RECEIVER,msg)
             print "Email sent successfully!"
         except smtplib.SMTPException:
             print "Email could not be sent"
