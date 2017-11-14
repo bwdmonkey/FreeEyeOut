@@ -46,8 +46,8 @@ class EmailAlertPipeline(object):
         Process incoming items
         """
 
-        general_seats = int(item.get("seats_data").get("general_remaining"))
-        restricted_seats = int(item.get("seats_data").get("restricted_remaining"))
+        general_seats = int(item["seats_data"]["general_remaining"])
+        restricted_seats = int(item["seats_data"]["restricted_remaining"])
 
         # Change the seat types accordingly
         open_seats = bool(0 < general_seats or 0 < restricted_seats)
@@ -82,11 +82,11 @@ class ConsoleLogPipeline(object):
     Outputs CourseItem data to console
     """
     def process_item(self, item, spider):
-        seat_data = item.get("seats_data")
+        seat_data = item["seats_data"]
         print "----------------FreeShittyEyeOut by /u/leesw----------------"
-        print "Course: ", item.get("course").get("name") + " " + item.get("section")
-        print "Total Seats Remaining: ", seat_data.get("total_remaining")
-        print "Currently Registered: ", seat_data.get("currently_registered")
-        print "General Seats Remaining: ", seat_data.get("general_remaining")
-        print "Restricted Seats Remaining: ", seat_data.get("restricted_remaining")
+        print "Course: ", item["course"]["name"] + " " + item["section"]
+        print "Total Seats Remaining: ", seat_data["total_remaining"]
+        print "Currently Registered: ", seat_data["currently_registered"]
+        print "General Seats Remaining: ", seat_data["general_remaining"]
+        print "Restricted Seats Remaining: ", seat_data["restricted_remaining"]
         return item

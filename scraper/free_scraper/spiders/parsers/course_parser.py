@@ -90,7 +90,6 @@ def parse_section_details(response):
     """
     Parse section details page.
     """
-    # print response.extract()
     section = response.meta['data']
     tbl = response.xpath("//table")[3].xpath("tr")[0]
     total_remaining = _extract_element(tbl.xpath("//td//strong/text()"), 0)
