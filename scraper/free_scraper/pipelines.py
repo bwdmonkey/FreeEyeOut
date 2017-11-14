@@ -84,7 +84,7 @@ class ConsoleLogPipeline(object):
     def process_item(self, item, spider):
         seat_data = item.get("seats_data")
         print "----------------FreeShittyEyeOut by /u/leesw----------------"
-        print "Course: ", item.get("course").get("name") + item.get("section")
+        print "Course: ", item.get("course").get("name") + " " + item.get("section")
         print "Total Seats Remaining: ", seat_data.get("total_remaining")
         print "Currently Registered: ", seat_data.get("currently_registered")
         print "General Seats Remaining: ", seat_data.get("general_remaining")
