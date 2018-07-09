@@ -9,15 +9,12 @@ class FreeshittyeyeoutSpider(scrapy.Spider):
     allowed_domains = ['courses.students.ubc.ca']
     start_urls = [
     # EDIT HERE USE THE SIMILAR FORMAT
-        'https://courses.students.ubc.ca/cs/main?pname=subjarea&tname=subjareas&req=5&dept=CPSC&course=110&section=101',
-        'https://courses.students.ubc.ca/cs/main?pname=subjarea&tname=subjareas&req=5&dept=CPSC&course=110&section=103',
-        'https://courses.students.ubc.ca/cs/main?pname=subjarea&tname=subjareas&req=5&dept=CPSC&course=110&section=104',
-        'https://courses.students.ubc.ca/cs/main?pname=subjarea&tname=subjareas&req=5&dept=CPSC&course=121&section=201',
-        'https://courses.students.ubc.ca/cs/main?pname=subjarea&tname=subjareas&req=5&dept=CPSC&course=121&section=202',
-        'https://courses.students.ubc.ca/cs/main?pname=subjarea&tname=subjareas&req=5&dept=CPSC&course=121&section=203',
-        'https://courses.students.ubc.ca/cs/main?pname=subjarea&tname=subjareas&req=5&dept=CPSC&course=210&section=201',
-        'https://courses.students.ubc.ca/cs/main?pname=subjarea&tname=subjareas&req=5&dept=CPSC&course=210&section=202',
-        'https://courses.students.ubc.ca/cs/main?pname=subjarea&tname=subjareas&req=5&dept=CPSC&course=210&section=203',
+        'https://courses.students.ubc.ca/cs/main?pname=subjarea&tname=subjareas&req=5&dept=ECON&course=301&section=002',
+        'https://courses.students.ubc.ca/cs/main?pname=subjarea&tname=subjareas&req=5&dept=CPSC&course=313&section=T2D',
+        'https://courses.students.ubc.ca/cs/main?pname=subjarea&tname=subjareas&req=5&dept=CPSC&course=313&section=T2F',
+        'https://courses.students.ubc.ca/cs/main?pname=subjarea&tname=subjareas&req=5&dept=ECON&course=302&section=005',
+        'https://courses.students.ubc.ca/cs/main?pname=subjarea&tname=subjareas&req=5&dept=ECON&course=364A&section=001',
+        'https://courses.students.ubc.ca/cs/main?pname=subjarea&tname=subjareas&req=5&dept=ECON&course=371&section=001',
     ]
     def parse(self, response):
         title = response.css("h4::text").extract_first()
@@ -32,9 +29,7 @@ class FreeshittyeyeoutSpider(scrapy.Spider):
         print "Restricted Seats Remaining: ",seats[8]
         open_seats = bool(0 < int(seats[6]))
         if open_seats:
+            print(title + " has free seats!")
             while open_seats:
                 command = 'say "%s has free seats!"'%title
                 os.system(command)
-                print seats[6]
-                print open_seats
-                print('\a\a\a')
