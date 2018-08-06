@@ -2,20 +2,19 @@
 import scrapy
 import re
 import os
+import csv
 
 
 class FreeeyeoutSpider(scrapy.Spider):
     name = 'FreeEyeOut'
     allowed_domains = ['courses.students.ubc.ca']
-    start_urls = [
-    # EDIT HERE USE THE SIMILAR FORMAT
-        'https://courses.students.ubc.ca/cs/main?pname=subjarea&tname=subjareas&req=5&dept=ECON&course=301&section=002',
-        'https://courses.students.ubc.ca/cs/main?pname=subjarea&tname=subjareas&req=5&dept=CPSC&course=313&section=T2D',
-        'https://courses.students.ubc.ca/cs/main?pname=subjarea&tname=subjareas&req=5&dept=CPSC&course=313&section=T2F',
-        'https://courses.students.ubc.ca/cs/main?pname=subjarea&tname=subjareas&req=5&dept=ECON&course=302&section=005',
-        'https://courses.students.ubc.ca/cs/main?pname=subjarea&tname=subjareas&req=5&dept=ECON&course=364A&section=001',
-        'https://courses.students.ubc.ca/cs/main?pname=subjarea&tname=subjareas&req=5&dept=ECON&course=371&section=001',
-    ]
+    csv_path = os.join(os.path.abspath(os.path.dirname(os.path.dirname(__file__))), 'watchlist.csv')
+    start_urls = []
+    with open(csv_path) as csv_file:
+        reader = csv.reader(csv_file)
+        for row in reader:
+            start_urls.append(row[0])
+
     def parse(self, response):
         title = response.css("h4::text").extract_first()
         seats = response.css('table.\\27table').extract_first()
