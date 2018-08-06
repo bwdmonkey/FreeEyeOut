@@ -4,8 +4,8 @@ import re
 import os
 
 
-class FreeshittyeyeoutSpider(scrapy.Spider):
-    name = 'FreeShittyEyeOut'
+class FreeeyeoutSpider(scrapy.Spider):
+    name = 'FreeEyeOut'
     allowed_domains = ['courses.students.ubc.ca']
     start_urls = [
     # EDIT HERE USE THE SIMILAR FORMAT
@@ -21,7 +21,7 @@ class FreeshittyeyeoutSpider(scrapy.Spider):
         seats = response.css('table.\\27table').extract_first()
         seats = re.split("\D",seats)
         seats = filter(None, seats)
-        print "----------------FreeShittyEyeOut by /u/leesw----------------"
+        print "----------------FreeEyeOut by /u/leesw----------------"
         print "Course: ", title
         print "Total Seats Remaining: ",seats[2]
         print "Currently Registered: ",seats[4]

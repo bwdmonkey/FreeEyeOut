@@ -1,5 +1,5 @@
 # # import dmoz spider class
-# from FreeShittyEyeOut import FreeshittyeyeoutSpider
+# from FreeEyeOut import FreeeyeoutSpider
 #
 #
 # # scrapy api
