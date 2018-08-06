@@ -8,7 +8,7 @@ import csv
 class FreeeyeoutSpider(scrapy.Spider):
     name = 'FreeEyeOut'
     allowed_domains = ['courses.students.ubc.ca']
-    csv_path = os.join(os.path.abspath(os.path.dirname(os.path.dirname(__file__))), 'watchlist.csv')
+    csv_path = os.path.join(os.path.abspath(os.path.dirname(os.path.dirname(__file__))), 'watchlist.csv')
     start_urls = []
     with open(csv_path) as csv_file:
         reader = csv.reader(csv_file)
