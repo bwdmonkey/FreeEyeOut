@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
+from os import path, system
+from services.mailer import Mailer
 import scrapy
 import re
-import os
 import csv
 
 
 class FreeeyeoutSpider(scrapy.Spider):
     name = 'FreeEyeOut'
     allowed_domains = ['courses.students.ubc.ca']
-    csv_path = os.path.join(os.path.abspath(os.path.dirname(os.path.dirname(__file__))), 'watchlist.csv')
+    csv_path = path.join(path.abspath(path.dirname(path.dirname(__file__))), 'watchlist.csv')
     start_urls = []
     with open(csv_path) as csv_file:
         reader = csv.reader(csv_file)
@@ -16,6 +17,7 @@ class FreeeyeoutSpider(scrapy.Spider):
             start_urls.append(row[0])
 
     def parse(self, response):
+        url = response.request.url
         title = response.css("h4::text").extract_first()
         seats = response.css('table.\\27table').extract_first()
         seats = re.split("\D",seats)
@@ -29,6 +31,7 @@ class FreeeyeoutSpider(scrapy.Spider):
         open_seats = bool(0 < int(seats[6]))
         if open_seats:
             print(title + " has free seats!")
+            Mailer(title, url).alert()
             while open_seats:
                 command = 'say "%s has free seats!"'%title
-                os.system(command)
+                system(command)
