@@ -3,14 +3,15 @@ import smtplib
 
 
 class Mailer():
-	def __init__(self, course, url):
+	def __init__(self, course, url, to_emails):
 		self.course = course
 		self.url = url
+		self.to_emails = to_emails
 		pass
 
 	def alert(self):
 		FROM = config("EMAIL_HOST_USER")
-		TO_LIST = config("TEMP_TO_EMAIL", cast=Csv())
+		TO_LIST = self.to_emails
 		TO_STRING = ", ".join(TO_LIST)
 		SUBJECT = "%s has free seats!" % self.course
 		TEXT = "%s\n\n%s" % (SUBJECT, self.url)
