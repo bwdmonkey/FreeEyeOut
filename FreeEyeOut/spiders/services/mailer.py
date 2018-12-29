@@ -1,5 +1,6 @@
 from decouple import config, Csv
 import smtplib
+import sys
 
 
 class Mailer():
@@ -32,3 +33,4 @@ class Mailer():
 			print "Successfully sent the mail to %s about %s" % (TO_STRING, self.course)
 		except:
 			print "Failed to send mail to %s about %s" % (TO_STRING, self.course)
+			print "Unexpected error:", sys.exc_info()[0]
