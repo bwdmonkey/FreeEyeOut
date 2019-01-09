@@ -1,4 +1,9 @@
-all: install
+all: run
+
+.PHONY: run
+run:
+	. venv/bin/activate
+	sh ./run.sh
 
 # List all commands
 .PHONY: ls
