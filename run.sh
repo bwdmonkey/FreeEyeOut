@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+source venv/bin/activate
 while true
 do
 	clear
