@@ -7,5 +7,5 @@ do
     printf '\e[3J'
     date
     python -m scrapy crawl FreeEyeOut
-    sleep 30
+    sleep 60
 done

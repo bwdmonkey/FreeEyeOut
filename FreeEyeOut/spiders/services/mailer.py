@@ -30,7 +30,7 @@ class Mailer():
 			server.login(email_host_user, email_host_pwd)
 			server.sendmail(FROM, TO_LIST, message)
 			server.close()
-			print "Successfully sent the mail to %s about %s" % (TO_STRING, self.course)
+			print("Successfully sent the mail to %s about %s" % (TO_STRING, self.course))
 		except:
-			print "Failed to send mail to %s about %s" % (TO_STRING, self.course)
-			print "Unexpected error:", sys.exc_info()[0]
+			print("Failed to send mail to %s about %s" % (TO_STRING, self.course))
+			print("Unexpected error:", sys.exc_info()[0])
